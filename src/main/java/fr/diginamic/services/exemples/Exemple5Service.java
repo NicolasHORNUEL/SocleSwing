@@ -1,6 +1,5 @@
 package fr.diginamic.services.exemples;
 
-import java.awt.Color;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,11 +12,11 @@ import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.db.SqlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.TextField;
-import fr.diginamic.services.exemples.entite.Client;
+import fr.diginamic.nicolas.Client;
 
 public class Exemple5Service extends MenuService {
 
-	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("h2-mem");
+	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("agence-vip-location");
 
 	private void initDatabase() {
 		EntityManager em = emf.createEntityManager();
