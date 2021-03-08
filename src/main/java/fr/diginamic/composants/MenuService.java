@@ -1,6 +1,6 @@
 package fr.diginamic.composants;
 
-public abstract class MenuService {
+public abstract class MenuService  {
 	
 	protected AbstractApplication application;
 	

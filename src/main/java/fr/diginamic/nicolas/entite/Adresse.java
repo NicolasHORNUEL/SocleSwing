@@ -1,4 +1,4 @@
-package fr.diginamic.nicolas;
+package fr.diginamic.nicolas.entite;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -19,7 +19,7 @@ public class Adresse {
 	private String ville;
 	
 	@Column(name="Numero_Tel", length = 10, nullable = false)
-	private int numeroTel;
+	private String numeroTel;
 	
 	@Column(name="Email", length = 50, nullable = false, unique =true)
 	private String email;
@@ -34,7 +34,7 @@ public class Adresse {
 	/** Constructeur
 	 * 
 	 */
-	public Adresse(int numeroRue, String libelleRue, int codePostale, String ville, int numeroTel, String email) {
+	public Adresse(int numeroRue, String libelleRue, int codePostale, String ville, String numeroTel, String email) {
 		this.numeroRue = numeroRue;
 		this.libelleRue = libelleRue;
 		this.codePostale = codePostale;
@@ -102,14 +102,14 @@ public class Adresse {
 	/** Getter
 	 * @return the numeroTel
 	 */
-	public int getNumeroTel() {
+	public String getNumeroTel() {
 		return numeroTel;
 	}
 
 	/** Setter
 	 * @param numeroTel the numeroTel to set
 	 */
-	public void setNumeroTel(int numeroTel) {
+	public void setNumeroTel(String numeroTel) {
 		this.numeroTel = numeroTel;
 	}
 

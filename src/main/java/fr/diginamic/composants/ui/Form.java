@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.diginamic.composants.error.ErrorManager;
-import fr.diginamic.composants.validator.FormValidator;
 
 /** Formulaire
  * @author RichardBONNAMY
@@ -46,7 +45,7 @@ public class Form implements Iterable<Input> {
 	 * @param name nom du champ de saisie
 	 * @return String
 	 */
-	public String getValue(String name) {
+	public <T> T getValue(String name) {
 		return getInput(name).getValue();
 	}
 

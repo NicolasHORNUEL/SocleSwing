@@ -1,4 +1,4 @@
-package fr.diginamic.nicolas;
+package fr.diginamic.nicolas.entite;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,14 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import fr.diginamic.composants.ui.Selectable;
+
 
 @Entity
 @Table(name="Clients")
-public class Client {
+public class Client implements Selectable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private short id;
+	private Long id;
 	
 	@Column(name="Nom", length = 255, nullable = false)
 	private String nom;
@@ -32,8 +34,8 @@ public class Client {
 	@Embedded
 	private Adresse adresse;
 	
-	@OneToMany(mappedBy="client")
-	private Set<Permis> permis  = new HashSet<>();
+	@Embedded
+	private Permis permis;
 	
 	@OneToMany(mappedBy="client")
 	private Set<Reservation> reservation = new HashSet<>();
@@ -48,24 +50,35 @@ public class Client {
 	/** Constructeur
 	 * 
 	 */
-	public Client(String nom, String prenom, Adresse adresse, Set<Permis> permis) {
+	public Client(String nom, String prenom, Adresse adresse, Permis permis) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adresse = adresse;
 		this.permis = permis;
 	}
 
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(nom);
+		builder.append(" ");
+		builder.append(prenom);
+		return builder.toString();
+	}
+	
+
 	/** Getter
 	 * @return the id
 	 */
-	public short getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/** Setter
 	 * @param id the id to set
 	 */
-	public void setId(short id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -114,14 +127,14 @@ public class Client {
 	/** Getter
 	 * @return the permis
 	 */
-	public Set<Permis> getPermis() {
+	public Permis getPermis() {
 		return permis;
 	}
 
 	/** Setter
 	 * @param permis the permis to set
 	 */
-	public void setPermis(Set<Permis> permis) {
+	public void setPermis(Permis permis) {
 		this.permis = permis;
 	}
 

@@ -12,11 +12,11 @@ import fr.diginamic.composants.MenuService;
 import fr.diginamic.composants.db.SqlUtils;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.TextField;
-import fr.diginamic.nicolas.Client;
+import fr.diginamic.services.exemples.entite.Client;
 
 public class Exemple5Service extends MenuService {
 
-	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("agence-vip-location");
+	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("h2-mem");
 
 	private void initDatabase() {
 		EntityManager em = emf.createEntityManager();

@@ -17,4 +17,5 @@ public abstract class FormValidator {
 	 * @return boolean
 	 */
 	public abstract boolean validate(Form form);
+
 }
