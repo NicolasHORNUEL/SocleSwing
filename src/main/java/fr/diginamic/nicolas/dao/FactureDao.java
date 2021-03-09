@@ -2,16 +2,12 @@ package fr.diginamic.nicolas.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import fr.diginamic.Application;
 import fr.diginamic.nicolas.entite.Facture;
 
-public class FactureDao {
-
-	private static EntityManager em = Application.emf.createEntityManager();
+public class FactureDao extends AbstractDao {
 
 	public static Facture findByResa(Long id) {
 		TypedQuery<Facture> query = em.createQuery("SELECT f FROM Facture f WHERE f.reservation.id=?1", Facture.class);

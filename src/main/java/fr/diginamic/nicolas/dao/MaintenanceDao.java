@@ -2,16 +2,12 @@ package fr.diginamic.nicolas.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import fr.diginamic.Application;
 import fr.diginamic.nicolas.entite.Maintenance;
 
-public class MaintenanceDao {
-
-	private static EntityManager em = Application.emf.createEntityManager();
+public class MaintenanceDao extends AbstractDao {
 
 	public static List<Maintenance> findAll() {
 		TypedQuery<Maintenance> query = em.createQuery("SELECT m FROM Maintenance m ORDER BY m.dateDebut ASC", Maintenance.class);

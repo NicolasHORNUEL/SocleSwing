@@ -51,12 +51,12 @@ public class MaintenanceService extends MenuService  {
 			for (Maintenance m : maintenances) {
 				html += "<tr>"
 						+ " <td width='15px'>" + m.getId() + "</td>"
-						+ " <td width='150px'>" + m.getDateDebut() + "</td>";
+						+ " <td width='150px'>" + DateUtils.tronque(m.getDateDebut()) + "</td>";
 				if (m.getDateFin()==null && m.getCoutMaintenance()==0.0) {
 					html += " <td><center><a class='btn-blue' href='retour(" + m.getId() + ")'><img width=25 src='images/calendar-alt-green-xs.png'></a></center></td>"
 							+ " <td width='150px'></td>";
 				} else  {
-					html += " <td width='150px'>" + m.getDateFin() + "</td>"
+					html += " <td width='150px'>" + DateUtils.tronque(m.getDateFin()) + "</td>"
 							+ " <td width='150px'>" + m.getCoutMaintenance() + "\u20AC " + "</td>";
 				}
 				html +=  " <td width='150px'>" + m.getVehicule().getMarque() + "</td>"

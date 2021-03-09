@@ -2,16 +2,12 @@ package fr.diginamic.nicolas.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import fr.diginamic.Application;
 import fr.diginamic.nicolas.entite.Client;
 
-public class ClientDao {
-
-	private static EntityManager em = Application.emf.createEntityManager();
+public class ClientDao extends AbstractDao {
 
 	public static List<Client> findAll() {
 		TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c", Client.class);

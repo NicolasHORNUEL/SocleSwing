@@ -24,7 +24,6 @@ import fr.diginamic.nicolas.entite.Reservation;
 import fr.diginamic.nicolas.entite.Type;
 import fr.diginamic.nicolas.entite.Vehicule;
 import fr.diginamic.nicolas.entite.Voiture;
-import fr.diginamic.nicolas.enumeration.StatusFacture;
 import fr.diginamic.nicolas.enumeration.StatusReservation;
 import fr.diginamic.nicolas.enumeration.TypeReglement;
 import fr.diginamic.nicolas.enumeration.TypeVehicule;
@@ -80,12 +79,8 @@ public class DatabaseService extends MenuService {
 		double coutTotal = tarif * nbJour;
 		Facture facture = new Facture(coutTotal, resa3);
 		Paiement paiement = new Paiement(TypeReglement.LIQUIDE, facture, agence);
-		facture.setTypeReglement(TypeReglement.LIQUIDE);
-		agence.setBilan(coutTotal);
-		facture.setStatusFacture(StatusFacture.PAYE);
 		FactureDao.create(facture);
 		PaiementDao.create(paiement);
-		AgenceDao.update(agence);
 		
 		Maintenance m2 = new Maintenance(DateUtils.getNow(), v4, agence);
 		Maintenance m2Dao = MaintenanceDao.create(m2);

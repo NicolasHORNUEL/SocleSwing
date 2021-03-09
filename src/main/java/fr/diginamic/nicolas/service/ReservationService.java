@@ -142,7 +142,6 @@ public class ReservationService extends MenuService {
 		
 		if (valide) {
 					
-			System.out.println(DateUtils.convert(form.getValue("champ4")));
 			r.setDateFin(DateUtils.convert(form.getValue("champ4")));
 			r.setKmFin(Integer.parseInt(form.getValue("champ6")));
 			r.setStatusReservation(StatusReservation.TERMINEE);
@@ -181,7 +180,7 @@ public class ReservationService extends MenuService {
 			if (valide) {
 						
 				TypeReglement typeReglement = form.getValue("champ4");
-				PaiementDao.create(new Paiement(typeReglement,f,a));
+				PaiementDao.create(new Paiement(typeReglement,f,a) );
 	
 			}
 			

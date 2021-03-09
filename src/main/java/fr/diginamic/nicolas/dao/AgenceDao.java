@@ -2,17 +2,13 @@ package fr.diginamic.nicolas.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import fr.diginamic.Application;
 import fr.diginamic.nicolas.entite.Agence;
 
-public class AgenceDao {
+public class AgenceDao  extends AbstractDao {
 	
-	private static EntityManager em = Application.emf.createEntityManager();
-
 	public static List<Agence> findAll() {
 		TypedQuery<Agence> query = em.createQuery("SELECT r FROM Agence r", Agence.class);
 		return query.getResultList();

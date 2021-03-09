@@ -17,7 +17,7 @@ public class MaintenanceFormValidator  extends FormValidator {
 			Vehicule vehicule  = form.getValue("champ2");
 			String dateDebut = form.getValue("champ3");
 			if (dateDebut==null) {
-				console.alert("La date de début est obligatoire !");
+				console.alert("La date de départ est obligatoire !");
 				return false;
 			} else if (!DateUtils.supNow(dateDebut)) {
 				console.alert("La date de départ doit être supérieure ou égale à la date du jour !");
@@ -33,7 +33,7 @@ public class MaintenanceFormValidator  extends FormValidator {
 			String dateFin = form.getValue("champ8");
 			String cout = form.getValue("champ9");
 			if (dateFin==null) {
-				console.alert("La date de fin est obligatoire !");
+				console.alert("La date de retour est obligatoire !");
 				return false;
 			} else if (!DateUtils.infNow(dateFin)) {
 				console.alert("La date de retour doit être antérieure ou égale à la date du jour !");
@@ -42,10 +42,10 @@ public class MaintenanceFormValidator  extends FormValidator {
 				console.alert("La date de retour doit être postérieure ou égale à la date d'envoi !");
 				return false;
 			} else if (cout.isEmpty()) {
-				console.alert("Le cout est obligatoire !");
+				console.alert("Le coût est obligatoire !");
 				return false;
-			} else if (Integer.parseInt(cout)<0) {
-				console.alert("Le cout doit être strictement positif !");
+			} else if (Double.parseDouble(cout)<0) {
+				console.alert("Le coût doit être strictement positif !");
 				return false;
 			}
 			return true;

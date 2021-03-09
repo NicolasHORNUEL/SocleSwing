@@ -1,8 +1,5 @@
 package fr.diginamic;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import fr.diginamic.composants.AbstractApplication;
 import fr.diginamic.nicolas.export.ReservationExport;
 import fr.diginamic.nicolas.service.ClientService;
@@ -26,8 +23,6 @@ import fr.diginamic.services.exemples.Exemple6Service;
  *
  */
 public class Application extends AbstractApplication {
-
-	public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("agence-vip-location");
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 6755835482616236832L;

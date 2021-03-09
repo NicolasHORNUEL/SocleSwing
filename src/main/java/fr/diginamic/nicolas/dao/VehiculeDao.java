@@ -2,16 +2,12 @@ package fr.diginamic.nicolas.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import fr.diginamic.Application;
 import fr.diginamic.nicolas.entite.Vehicule;
 
-public class VehiculeDao {
-
-	private static EntityManager em = Application.emf.createEntityManager();
+public class VehiculeDao extends AbstractDao {
 
 	public static List<Vehicule> findAll() {
 		TypedQuery<Vehicule> query = em.createQuery("SELECT v FROM Vehicule v", Vehicule.class);
