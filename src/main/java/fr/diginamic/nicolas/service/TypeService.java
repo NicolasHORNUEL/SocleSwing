@@ -21,60 +21,86 @@ public class TypeService extends MenuService {
 
 		List<Type> types = TypeDao.findAll();
 
-		console.print("<h1 class='bg-green'><center>Liste des types de véhicules</center></h1>");
-		console.print("<h2><a class='btn-blue' href='ajouter()'><img width=25 src='images/plus-green.png'></a>AJOUTER</h2>");
-
-		String html = "<table cellspacing=0>"
-				+ "<tr class='bg-green'>"
-				+ "<td></td>"
-				+ "<td>Tarif Journalier</td>"
-				+ "<td>Caution</td>"
-				+ "<td>Catégorie</td>"
-				+ "</tr>";
-		for (Type t : types) {
-			html += "<tr>"
-					+ " <td><a class='btn-blue' href='modifier()'><img width=25 src='images/pencil-blue-xs.png'></a></td>"
-					+ " <td width='150px'>" + t.getTarifJournalier() + "\u20AC " + "</td>"
-					+ " <td width='150px'>" + t.getCaution() + "\u20AC " + "</td>"
-					+ " <td width='150px'>" + t.getTypeVehicule() + "</td>"
-					+ " </tr>";
+		console.print("<h1 class='bg-red'><center>Liste des types de véhicules</center></h1>");
+		console.print("<h2><center><a class='btn-red' href='ajouter()'><img width=25 src='images/plus-green.png'></a>AJOUTER</center></h2>");
+		
+		if (!types.isEmpty()) {
+			String html = "<table cellspacing=0 align=center>"
+					+ "<tr class='bg-red'>"
+					+ "<td></td>"
+					+ "<td>Tarif Journalier</td>"
+					+ "<td>Caution</td>"
+					+ "<td>Catégorie</td>"
+					+ "</tr>";
+			for (Type t : types) {
+				html += "<tr>"
+						+ " <td><a class='btn-blue' href='modifier(" + t.getId() + ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>"
+						+ " <td width='150px'>" + t.getTarifJournalier() + "\u20AC " + "</td>"
+						+ " <td width='150px'>" + t.getCaution() + "\u20AC " + "</td>"
+						+ " <td width='150px'>" + t.getTypeVehicule() + "</td>"
+						+ " </tr>";
+			}
+			html += "</table>";
+			console.print(html);
 		}
-		html += "</table>";
-
-		console.print(html);
-
 	}
 
 	public void ajouter() {
 
-		// On commence par créér le formulaire vide
+		List<Selectable> typeVehicules = Arrays.asList(TypeVehicule.values());
+		
 		Form form = new Form();
 
-		// On ajoute au formulaire 2 champs de type texte.
 		form.addInput(new TextField("Tarif journalier:", "champ1"));
 		form.addInput(new TextField("Caution:", "champ2"));
+		form.addInput(new ComboBox("Type du véhicule:", "champ3", typeVehicules, typeVehicules.get(0)));
 
-		// Champ de type liste de sélection
-		List<Selectable> types = Arrays.asList(TypeVehicule.values());
-		form.addInput(new ComboBox("Type du véhicule:", "champ3", types, types.get(0)));
+		boolean valide = console.input("Demande d'informations", form, new TypeFormValidator());
 
-		// Création d'un validator qui stocke les règles de gestion
-		TypeFormValidator validator = new TypeFormValidator();
-
-		// La méthode suivante permet d’afficher le formulaire.
-		// La méthode retourne false si l’utilisateur a cliqué sur Annuler, sinon
-		// retourne true
-		boolean valide = console.input("Demande d'informations", form, validator);
-
-		// Récupéation des informations saisies
 		if (valide) {
 			double tarifJ = Double.parseDouble(form.getValue("champ1"));
 			int caution = Integer.parseInt(form.getValue("champ2"));
-			long typeString = Long.parseLong(form.getValue("champ3"));
-			TypeVehicule typeV = TypeVehicule.getInstance(typeString);
-			Type t = TypeDao.create(new Type(typeV, tarifJ, caution));
+			TypeVehicule typeVehicule = form.getValue("champ3");
+			TypeDao.create(new Type(typeVehicule, tarifJ, caution));
 			traitement();
+			
 		}
-	}
 
+		traitement();
+	}
+	
+	public void modifier(Long id) {
+		
+		Type type = TypeDao.findById(id);
+		
+		TypeVehicule typeVehicule = type.getTypeVehicule();
+		String typeVehiculeStr = typeVehicule.toString();
+		String tarifJourStr = String.valueOf(type.getTarifJournalier());
+		String cautionStr = String.valueOf(type.getCaution());
+				
+		Form form = new Form();
+
+		form.addInput(new TextField("Tarif journalier:", "champ1", tarifJourStr));
+		form.addInput(new TextField("Caution:", "champ2", cautionStr));
+		form.addInput(new TextField("Type du véhicule:", "champ3", typeVehiculeStr, false));
+
+		boolean valide = console.input("Demande d'informations", form, null);
+
+		if (valide) {
+			
+			double tarifJ = Double.parseDouble(form.getValue("champ1"));
+			int caution = Integer.parseInt(form.getValue("champ2"));
+			type.setTarifJournalier(tarifJ);
+			type.setCaution(caution);
+			TypeDao.update(type);
+
+		}
+
+		traitement();
+	}
+	
+	
+
+	
+	
 }

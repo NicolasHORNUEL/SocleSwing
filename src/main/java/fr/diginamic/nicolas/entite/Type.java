@@ -49,6 +49,13 @@ public class Type implements Selectable {
 	/** Constructeur
 	 * 
 	 */
+	public Type(TypeVehicule typeVehicule) {
+		this.typeVehicule = typeVehicule;
+	}
+	
+	/** Constructeur
+	 * 
+	 */
 	public Type(TypeVehicule typeVehicule, double tarifJournalier, int caution) {
 		this.typeVehicule = typeVehicule;
 		this.tarifJournalier = tarifJournalier;

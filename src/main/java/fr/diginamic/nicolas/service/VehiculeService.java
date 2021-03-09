@@ -28,37 +28,39 @@ public class VehiculeService extends MenuService {
 		List<Vehicule> vehicules = VehiculeDao.findAll();
 		
 		console.print("<h1 class='bg-red'><center>Liste des véhicules</center></h1>");
-		console.print("<h2><a class='btn-red' href='ajouter()'><img width=25 src='images/plus-green.png'></a>AJOUTER</h2>");
-
-		String html = "<table cellspacing=0>"
-				+ "<tr class='bg-red'>"
-				+ "<td></td>"
-				+ "<td></td>"
-				+ "<td>Id</td>"
-				+ "<td>Marque</td>"
-				+ "<td>Modèle</td>"
-				+ "<td>Immatriculation</td>"
-				+ "<td>Kilométrage</td>"
-				+ "<td>Type</td>"
-				+ "<td>Status</td>"
-				+ "</tr>";
-		for (Vehicule v : vehicules) {
-			html += "<tr>"
-					+ " <td><a class='btn-blue' href='modifier(" + v.getId() + ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>"
-					+ " <td><a class='btn-blue' href='supprimer(" + v.getId() + ")'><img width=25 src='images/trash-red-xs.png'></a></td>"
-					+ " <td width='150px'>" + v.getId() + "</td>"
-					+ " <td width='150px'>" + v.getMarque() + "</td>"
-					+ " <td width='150px'>" + v.getModele() + "</td>"
-					+ " <td width='150px'>" + v.getImmatriculation() + "</td>"
-					+ " <td width='150px'>" + v.getKilometrage() + "</td>"
-					+ " <td width='150px'>" + v.getType().getTypeVehicule() + "</td>"
-					+ " <td width='150px'>" + v.getStatusVehicule() + "</td>"
-					+ " </tr>";
+		console.print("<h2><center><a class='btn-red' href='ajouter()'><img width=25 src='images/plus-green.png'></a>AJOUTER</center></h2>");
+		
+		if (!vehicules.isEmpty()) {
+			
+			String html = "<table cellspacing=0 align=center>"
+					+ "<tr class='bg-red'>"
+					+ "<td></td>"
+					+ "<td></td>"
+					+ "<td>Id</td>"
+					+ "<td>Marque</td>"
+					+ "<td>Modèle</td>"
+					+ "<td>Immatriculation</td>"
+					+ "<td>Kilométrage</td>"
+					+ "<td>Type</td>"
+					+ "<td>Status</td>"
+					+ "</tr>";
+			for (Vehicule v : vehicules) {
+				html += "<tr>"
+						+ " <td><a class='btn-blue' href='modifier(" + v.getId() + ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>"
+						+ " <td><a class='btn-blue' href='supprimer(" + v.getId() + ")'><img width=25 src='images/trash-red-xs.png'></a></td>"
+						+ " <td width='150px'>" + v.getId() + "</td>"
+						+ " <td width='150px'>" + v.getMarque() + "</td>"
+						+ " <td width='150px'>" + v.getModele() + "</td>"
+						+ " <td width='150px'>" + v.getImmatriculation() + "</td>"
+						+ " <td width='150px'>" + v.getKilometrage() + "</td>"
+						+ " <td width='150px'>" + v.getType().getTypeVehicule() + "</td>"
+						+ " <td width='150px'>" + v.getStatusVehicule() + "</td>"
+						+ " </tr>";
+			}
+			html += "</table>";
+			
+			console.print(html);
 		}
-		html += "</table>";
-
-		console.print(html);
-
 	}
 	
 	
@@ -132,7 +134,7 @@ public class VehiculeService extends MenuService {
 		types.addAll(typesDao);	
 		int number = 0;
 		for (int i = 0; i < types.size(); i++) {
-			if (types.get(i).equals(v.getType())) {
+			if (types.get(i).toString().equals(v.getType().getTypeVehicule().toString())) {
 				number = i;
 			}
 		}
@@ -143,10 +145,10 @@ public class VehiculeService extends MenuService {
 		if (vehicule == "Camion") {
 			Camion cDao = CamionDao.findById(id);
 			form.addInput(new TextField("Volume:", "champ6", String.valueOf(cDao.getVolume())));
-			form.addInput(new TextField("Nombre de place:", "champ7", null));
+			form.addInput(new TextField("Nombre de place:", "champ7", null, false));
 		} else if (vehicule == "Voiture") {
 			Voiture vDao = VoitureDao.findById(id);
-			form.addInput(new TextField("Volume:", "champ6", null));
+			form.addInput(new TextField("Volume:", "champ6", null, false));
 			form.addInput(new TextField("Nombre de place:", "champ7", String.valueOf(vDao.getNombrePlace())));
 		}
 		
@@ -169,7 +171,11 @@ public class VehiculeService extends MenuService {
 	
 	public void supprimer(Long id) {
 		Vehicule v = VehiculeDao.findById(id);
-		VehiculeDao.delete(v);
+		if (v.getReservation().isEmpty()) {
+			VehiculeDao.delete(v);
+		} else {
+			console.alert("Le véhicule ne peut pas être supprimé");
+		}
 		traitement();		
 	}
 }

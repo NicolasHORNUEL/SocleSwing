@@ -63,6 +63,21 @@ public class DateUtils {
 	 * @param String du formulaire DataField
 	 * @return boolean de comparaison avec la date actuelle
 	 */
+	public static boolean infNow(String valeur) {
+		Date dateNow = getNow();
+		String stringNow = formatage.format(dateNow);
+		Date formatNow = convert(stringNow);
+		if (convert(valeur).before(formatNow) || valeur.equals(stringNow)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * @param String du formulaire DataField
+	 * @return boolean de comparaison avec la date actuelle
+	 */
 	public static boolean supNow(String valeur) {
 		Date dateNow = getNow();
 		String stringNow = formatage.format(dateNow);

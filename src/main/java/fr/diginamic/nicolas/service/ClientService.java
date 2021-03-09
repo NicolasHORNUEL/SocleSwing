@@ -25,24 +25,25 @@ public class ClientService extends MenuService {
 		List<Client> clients = ClientDao.findAll();
 
 		console.print("<h1 class='bg-red'><center>Liste des clients</center></h1>");
-		console.print("<h2><a class='btn-red' href='ajouter()'><img width=25 src='images/plus-green.png'></a>AJOUTER</h2>");
-
-		String html = "<table cellspacing=0>" + "<tr class='bg-red'>" + "<td></td>" + "<td></td>" + "<td>Id</td>"
-				+ "<td>NOM Prénom</td>" + "<td>Adresse postale</td>" + "<td>Téléphone</td>" + "<td>Email</td>" + "<td>Permis</td>"
-				+ "</tr>";
-		for (Client c : clients) {
-			html += "<tr>" + " <td><a class='btn-blue' href='modifier(" + c.getId()
-					+ ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>" + " <td><a class='btn-blue' href='supprimer("
-					+ c.getId() + ")'><img width=25 src='images/trash-red-xs.png'></a></td>" + " <td width='15px'>" + c.getId()
-					+ "</td>" + " <td width='150px'>" + c.getNom() + " " + c.getPrenom() + "</td>" + " <td width='300px'>"
-					+ c.getAdresse().getNumeroRue() + ", " + c.getAdresse().getLibelleRue() + " - "
-					+ c.getAdresse().getCodePostale() + " " + c.getAdresse().getVille() + "</td>" + " <td width='150px'>"
-					+ c.getAdresse().getNumeroTel() + "</td>" + " <td width='150px'>" + c.getAdresse().getEmail() + "</td>"
-					+ " <td width='15px'>" + c.getPermis().getTypePermis() + "</td>" + " </tr>";
+		console.print("<h2><center><a class='btn-red' href='ajouter()'><img width=25 src='images/plus-green.png'></a>AJOUTER</center></h2>");
+		
+		if (!clients.isEmpty()) {
+			String html = "<table cellspacing=0 align=center>" + "<tr class='bg-red'>" + "<td></td>" + "<td></td>" + "<td>Id</td>"
+					+ "<td>NOM Prénom</td>" + "<td>Adresse postale</td>" + "<td>Téléphone</td>" + "<td>Email</td>" + "<td>Permis</td>"
+					+ "</tr>";
+			for (Client c : clients) {
+				html += "<tr>" + " <td><a class='btn-blue' href='modifier(" + c.getId()
+						+ ")'><img width=25 src='images/pencil-blue-xs.png'></a></td>" + " <td><a class='btn-blue' href='supprimer("
+						+ c.getId() + ")'><img width=25 src='images/trash-red-xs.png'></a></td>" + " <td width='15px'>" + c.getId()
+						+ "</td>" + " <td width='150px'>" + c.getNom() + " " + c.getPrenom() + "</td>" + " <td width='300px'>"
+						+ c.getAdresse().getNumeroRue() + ", " + c.getAdresse().getLibelleRue() + " - "
+						+ c.getAdresse().getCodePostale() + " " + c.getAdresse().getVille() + "</td>" + " <td width='150px'>"
+						+ c.getAdresse().getNumeroTel() + "</td>" + " <td width='150px'>" + c.getAdresse().getEmail() + "</td>"
+						+ " <td width='15px'>" + c.getPermis().getTypePermis() + "</td>" + " </tr>";
+			}
+			html += "</table>";
+			console.print(html);
 		}
-		html += "</table>";
-
-		console.print(html);
 	}
 
 	

@@ -7,6 +7,7 @@ import fr.diginamic.nicolas.dao.AgenceDao;
 import fr.diginamic.nicolas.dao.CamionDao;
 import fr.diginamic.nicolas.dao.ClientDao;
 import fr.diginamic.nicolas.dao.FactureDao;
+import fr.diginamic.nicolas.dao.MaintenanceDao;
 import fr.diginamic.nicolas.dao.PaiementDao;
 import fr.diginamic.nicolas.dao.ReservationDao;
 import fr.diginamic.nicolas.dao.TypeDao;
@@ -16,12 +17,14 @@ import fr.diginamic.nicolas.entite.Agence;
 import fr.diginamic.nicolas.entite.Camion;
 import fr.diginamic.nicolas.entite.Client;
 import fr.diginamic.nicolas.entite.Facture;
+import fr.diginamic.nicolas.entite.Maintenance;
 import fr.diginamic.nicolas.entite.Paiement;
 import fr.diginamic.nicolas.entite.Permis;
 import fr.diginamic.nicolas.entite.Reservation;
 import fr.diginamic.nicolas.entite.Type;
 import fr.diginamic.nicolas.entite.Vehicule;
 import fr.diginamic.nicolas.entite.Voiture;
+import fr.diginamic.nicolas.enumeration.StatusFacture;
 import fr.diginamic.nicolas.enumeration.StatusReservation;
 import fr.diginamic.nicolas.enumeration.TypeReglement;
 import fr.diginamic.nicolas.enumeration.TypeVehicule;
@@ -66,16 +69,33 @@ public class DatabaseService extends MenuService {
 		Date dateFin3 = DateUtils.set(2020, 10, 12);
 		Reservation resa1 = ReservationDao.create(new Reservation(dateDebut, dateFin1, c1, v3));
 		Reservation resa2 = ReservationDao.create(new Reservation(dateDebut, dateFin2, "Le petit chien est accepté à bord du véhicule", c3, v1));
+		Reservation resa3 = ReservationDao.create(new Reservation(dateDebut3, dateFin3, "Pour une première !", c2, v4));
 		
-		Reservation resa3 = new Reservation(dateDebut3, dateFin3, "Pour une première !", c2, v4);
 		resa3.setKmFin(v4.getKilometrage()+3000);
 		resa3.setStatusReservation(StatusReservation.TERMINEE);
-		ReservationDao.create(resa3);
+		ReservationDao.update(resa3);
+		
 		Long nbJour = DateUtils.difference(dateDebut3, dateFin3);
 		double tarif = resa3.getVehicule().getType().getTarifJournalier();
 		double coutTotal = tarif * nbJour;
-		Facture facture = FactureDao.create(new Facture(coutTotal, resa3));
-		Paiement paiement = PaiementDao.create(new Paiement(TypeReglement.LIQUIDE, facture, agence));
+		Facture facture = new Facture(coutTotal, resa3);
+		Paiement paiement = new Paiement(TypeReglement.LIQUIDE, facture, agence);
+		facture.setTypeReglement(TypeReglement.LIQUIDE);
+		agence.setBilan(coutTotal);
+		facture.setStatusFacture(StatusFacture.PAYE);
+		FactureDao.create(facture);
+		PaiementDao.create(paiement);
+		AgenceDao.update(agence);
+		
+		Maintenance m2 = new Maintenance(DateUtils.getNow(), v4, agence);
+		Maintenance m2Dao = MaintenanceDao.create(m2);
+		
+		Maintenance m1 = new Maintenance(DateUtils.getNow(), v1, agence);
+		Maintenance m1Dao = MaintenanceDao.create(m1);
+		m1Dao.setDateFin(DateUtils.getNow());
+		m1Dao.setCoutMaintenance(356.0);
+		MaintenanceDao.update(m1Dao);
+
 		
 
 	}

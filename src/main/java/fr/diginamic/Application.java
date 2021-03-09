@@ -7,10 +7,10 @@ import fr.diginamic.composants.AbstractApplication;
 import fr.diginamic.nicolas.export.ReservationExport;
 import fr.diginamic.nicolas.service.ClientService;
 import fr.diginamic.nicolas.service.DatabaseService;
+import fr.diginamic.nicolas.service.MaintenanceService;
 import fr.diginamic.nicolas.service.ReservationService;
 import fr.diginamic.nicolas.service.TypeService;
 import fr.diginamic.nicolas.service.VehiculeService;
-import fr.diginamic.services.exemples.AideService;
 import fr.diginamic.services.exemples.Exemple2Service;
 import fr.diginamic.services.exemples.Exemple3Service;
 import fr.diginamic.services.exemples.Exemple4Service;
@@ -52,18 +52,17 @@ public class Application extends AbstractApplication {
 		addMenu(6, "Database");
 		
 		
-		addMenuOption(1, "Export CSV de la liste clients", new AideService());
-		addMenuOption(1, "Export CSV de la liste véhicule", new AideService());
 		addMenuOption(1, "Export CSV de la liste réservation", new ReservationExport());
 		addMenuOption(2, "Liste des types de véhicule", new TypeService());
 		addMenuOption(2, "Liste des véhicules", new VehiculeService());
+		addMenuOption(2, "Gestion maintenance", new MaintenanceService());
 		addMenuOption(3, "Liste des clients", new ClientService());
 		addMenuOption(4, "Liste des réservations", new ReservationService());
 		addMenuOption(5, "Exemple 2 - Textes de couleur", new Exemple2Service());
 		addMenuOption(5, "Exemple 3 - Table", new Exemple3Service());
 		addMenuOption(5, "Exemple 4 - Table avec liens vers méthodes", new Exemple4Service());
-		//addMenuOption(4, "Exemple 5 - Table dynamique", new Exemple5Service());
 		addMenuOption(5, "Exemple 6 - Formulaire", new Exemple6Service());
 		addMenuOption(6, "Initialisation", new DatabaseService());
 	}
+
 }

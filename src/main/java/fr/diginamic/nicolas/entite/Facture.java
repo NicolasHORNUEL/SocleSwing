@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import fr.diginamic.nicolas.enumeration.StatusFacture;
 import fr.diginamic.nicolas.enumeration.StatusReservation;
+import fr.diginamic.nicolas.enumeration.TypeReglement;
 import fr.diginamic.nicolas.utils.DateUtils;
 
 @Entity
@@ -33,8 +34,9 @@ public class Facture {
 	@Column(name="Status_Facture", length = 50, nullable = false)
 	private StatusFacture statusFacture;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="Type_Reglement", length = 50, nullable = false)
-	private String typeReglement;
+	private TypeReglement typeReglement;
 	
 
 	//////////////////////// RELATION ///////////////////////////
@@ -56,7 +58,7 @@ public class Facture {
 		this.numeroFacture = "FAC" + DateUtils.getFacture();
 		this.coutFacture = coutFacture;
 		this.statusFacture = StatusFacture.NONPAYE;
-		this.typeReglement = "À définir";
+		this.typeReglement = TypeReglement.A_DEFINIR;
 		this.reservation = reservation;
 		this.reservation.setStatusReservation(StatusReservation.TERMINEE);
 	}
@@ -140,14 +142,14 @@ public class Facture {
 	/** Getter
 	 * @return the typeReglement
 	 */
-	public String getTypeReglement() {
+	public TypeReglement getTypeReglement() {
 		return typeReglement;
 	}
 
 	/** Setter
 	 * @param typeReglement the typeReglement to set
 	 */
-	public void setTypeReglement(String typeReglement) {
+	public void setTypeReglement(TypeReglement typeReglement) {
 		this.typeReglement = typeReglement;
 	}
 

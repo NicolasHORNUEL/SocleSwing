@@ -11,17 +11,18 @@ public class CharUtils {
 	public static boolean immat(String chaine) {
 		
 		CharSequence delimiter = "-";
-		int nbOccurence = chaine.length() - chaine.replace(delimiter, "").length();		
+		int nbOccurence = chaine.length() - chaine.replace(delimiter, "").length();	
+
 		String[] morceaux = chaine.split("-");
 		int nbG = morceaux[0].length();
 		int nbM = morceaux[1].length();
 		int nbD = morceaux[2].length();
-		
+
 		if (chaine.indexOf("-") == -1) {
 			return false;
 		} else if (nbOccurence != 2) {
 			return false;
-		} else if (nbG != 2 && nbM != 3 && nbD != 2) {
+		} else if (nbG != 2 || nbM != 3 || nbD != 2) {
 			return false;
 		}
 		

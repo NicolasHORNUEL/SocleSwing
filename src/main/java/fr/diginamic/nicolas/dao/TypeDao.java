@@ -19,6 +19,10 @@ public class TypeDao {
 		return query.getResultList();
 	}
 
+	public static Type findById(Long id) {
+		return em.find(Type.class, id);
+	}
+	
 	public static Type findOne(TypeVehicule typeVehicule) {
 		TypedQuery<Type> query = em.createQuery("SELECT t FROM Type t WHERE t.typeVehicule=?1", Type.class);
 		query.setParameter(1, typeVehicule);

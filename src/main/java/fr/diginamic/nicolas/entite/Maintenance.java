@@ -25,12 +25,12 @@ public class Maintenance {
 	@Temporal(TemporalType.DATE)
 	private Date dateDebut;
 	
-	@Column(name="Date_Fin", nullable = false)
+	@Column(name="Date_Fin", nullable = true)
 	@Temporal(TemporalType.DATE)
 	private Date dateFin;
 
-	@Column(name="Cout_Maintenance", length = 50, nullable = false)
-	private int coutMaintenance;
+	@Column(name="Cout_Maintenance", length = 50, nullable = true)
+	private double coutMaintenance;
 	
 	//////////////////////// RELATION ///////////////////////////
 
@@ -51,10 +51,8 @@ public class Maintenance {
 	/** Constructeur
 	 * 
 	 */
-	public Maintenance(Date dateDebut, Date dateFin, int coutMaintenance, Vehicule vehicule, Agence agence) {
+	public Maintenance(Date dateDebut, Vehicule vehicule, Agence agence) {
 		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
-		this.coutMaintenance = coutMaintenance;
 		this.vehicule = vehicule;
 		this.agence = agence;
 	}
@@ -104,14 +102,14 @@ public class Maintenance {
 	/** Getter
 	 * @return the coutMaintenance
 	 */
-	public int getCoutMaintenance() {
+	public double getCoutMaintenance() {
 		return coutMaintenance;
 	}
 
 	/** Setter
 	 * @param coutMaintenance the coutMaintenance to set
 	 */
-	public void setCoutMaintenance(int coutMaintenance) {
+	public void setCoutMaintenance(double coutMaintenance) {
 		this.coutMaintenance = coutMaintenance;
 	}
 

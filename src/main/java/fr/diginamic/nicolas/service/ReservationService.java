@@ -37,15 +37,15 @@ public class ReservationService extends MenuService {
 		console.clear();
 		List<Reservation> reservations = ReservationDao.findAll();
 		console.print("<h1 class='bg-red'><center>Liste des réservations</center></h1>");
-		console.print("<h2><a class='btn-red' href='ouvrir()'><img width=25 src='images/plus-green.png'></a>Ouvrir une réservation</h2>");
+		console.print("<h2><center><a class='btn-red' href='ouvrir()'><img width=25 src='images/plus-green.png'></a>AJOUTER</center></h2>");
 		console.print(affichage(reservations, StatusReservation.ENCOURS));
 		console.print(affichage(reservations, StatusReservation.TERMINEE));
 	}
 	
 	private String affichage(List<Reservation> reservations, StatusReservation statusReservation) {
 		if (!reservations.isEmpty()) {
-			String html = "<h3>Réservations " + statusReservation.getLibelle() + "</h3>"
-					+ "<table cellspacing=0>" 
+			String html = "<h3><center>Réservations " + statusReservation.getLibelle() + "</center></h3>"
+					+ "<table cellspacing=0 align=center>" 
 					+ "<tr class='bg-red'>" 
 					+ "<td></td>" 
 					+ "<td>Id</td>"
@@ -142,6 +142,7 @@ public class ReservationService extends MenuService {
 		
 		if (valide) {
 					
+			System.out.println(DateUtils.convert(form.getValue("champ4")));
 			r.setDateFin(DateUtils.convert(form.getValue("champ4")));
 			r.setKmFin(Integer.parseInt(form.getValue("champ6")));
 			r.setStatusReservation(StatusReservation.TERMINEE);

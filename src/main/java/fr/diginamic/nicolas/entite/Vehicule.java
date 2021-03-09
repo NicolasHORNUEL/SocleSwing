@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import fr.diginamic.composants.ui.Selectable;
+import fr.diginamic.nicolas.enumeration.StatusReservation;
 import fr.diginamic.nicolas.enumeration.StatusVehicule;
 import fr.diginamic.nicolas.utils.DateUtils;
 
@@ -151,8 +152,16 @@ public class Vehicule implements Selectable {
 		this.statusVehicule = StatusVehicule.DISPONIBLE;
 		if (!reservations.isEmpty()) {
 			for (Reservation r : reservations) {
-				if (r.getDateDebut().before(DateUtils.getNow()) && r.getDateFin().after(DateUtils.getNow())) {
+				StatusReservation rStatus = r.getStatusReservation();
+				if (r.getDateDebut().before(DateUtils.getNow()) && r.getDateFin().after(DateUtils.getNow()) && rStatus.equals(StatusReservation.ENCOURS)) {
 					this.setStatusVehicule(StatusVehicule.LOUE);
+				}
+			}
+		}
+		if (!maintenances.isEmpty()) {
+			for (Maintenance m : maintenances) {
+				if (m.getDateFin()==null) {
+					this.setStatusVehicule(StatusVehicule.EN_MAINTENANCE);
 				}
 			}
 		}
