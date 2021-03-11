@@ -10,7 +10,7 @@ import fr.diginamic.nicolas.entite.Maintenance;
 public class MaintenanceDao extends AbstractDao {
 
 	public static List<Maintenance> findAll() {
-		TypedQuery<Maintenance> query = em.createQuery("SELECT m FROM Maintenance m ORDER BY m.dateDebut ASC", Maintenance.class);
+		TypedQuery<Maintenance> query = em.createQuery("SELECT m FROM Maintenance m ORDER BY m.id ASC", Maintenance.class);
 		return query.getResultList();
 	}
 	

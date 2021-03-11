@@ -87,6 +87,7 @@ public class Vehicule implements Selectable {
 		this.immatriculation = immatriculation;
 		this.kilometrage = kilometrage;
 		this.type = type;
+		this.statusVehicule = StatusVehicule.DISPONIBLE;
 	}
 
 	@Override

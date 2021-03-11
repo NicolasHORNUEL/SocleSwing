@@ -9,10 +9,12 @@ import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.Selectable;
 import fr.diginamic.composants.ui.TextField;
 import fr.diginamic.nicolas.dao.CamionDao;
+import fr.diginamic.nicolas.dao.ReservationDao;
 import fr.diginamic.nicolas.dao.TypeDao;
 import fr.diginamic.nicolas.dao.VehiculeDao;
 import fr.diginamic.nicolas.dao.VoitureDao;
 import fr.diginamic.nicolas.entite.Camion;
+import fr.diginamic.nicolas.entite.Reservation;
 import fr.diginamic.nicolas.entite.Type;
 import fr.diginamic.nicolas.entite.Vehicule;
 import fr.diginamic.nicolas.entite.Voiture;
@@ -118,12 +120,12 @@ public class VehiculeService extends MenuService {
 	public void modifier(Long id) {
 		
 		Vehicule v = VehiculeDao.findById(id);
-		
+		List<Reservation> reservationsDao = ReservationDao.findAllByVehicule(id);
 		Form form = new Form();	
 		form.addInput(new TextField("Status:", "champ0", v.getStatusVehicule().getLibelle(), false));
 		form.addInput(new TextField("Marque:", "champ1", v.getMarque()));
 		form.addInput(new TextField("Modèle:", "champ2", v.getModele()));
-		if (v.getReservation().isEmpty()) {
+		if (reservationsDao.isEmpty()) {
 			form.addInput(new TextField("Immatriculation:", "champ3", v.getImmatriculation()));
 		} else {
 			form.addInput(new TextField("Immatriculation:", "champ3", v.getImmatriculation(), false));
