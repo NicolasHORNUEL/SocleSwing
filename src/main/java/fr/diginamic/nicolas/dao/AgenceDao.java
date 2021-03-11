@@ -29,7 +29,6 @@ public class AgenceDao  extends AbstractDao {
 	public static void update(Agence a) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.merge(a);
 		transaction.commit();
 	}
 

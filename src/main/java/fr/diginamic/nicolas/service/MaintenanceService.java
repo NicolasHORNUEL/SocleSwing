@@ -16,7 +16,6 @@ import fr.diginamic.nicolas.dao.VehiculeDao;
 import fr.diginamic.nicolas.entite.Agence;
 import fr.diginamic.nicolas.entite.Maintenance;
 import fr.diginamic.nicolas.entite.Vehicule;
-import fr.diginamic.nicolas.enumeration.StatusVehicule;
 import fr.diginamic.nicolas.utils.DateUtils;
 
 public class MaintenanceService extends MenuService  {
@@ -131,9 +130,8 @@ public class MaintenanceService extends MenuService  {
 			m.setDateFin(dateFin);
 			m.setCoutMaintenance(cout);
 			MaintenanceDao.update(m);
-			a.setBilan(cout);
+			a.setBilan(-cout);
 			AgenceDao.update(a);
-			v.setStatusVehicule(StatusVehicule.EN_MAINTENANCE);
 
 		}
 		

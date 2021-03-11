@@ -101,6 +101,22 @@ public class DateUtils {
 		return false;
 	}
 	
+	/**
+	 * @param String v2 du formulaire DataField
+	 * @param String v1
+	 * @return boolean de comparaison entre les deux dates
+	 */
+	public static boolean plageIsNow(Date dateDebut, Date dateFin) {
+		Date dateDebutFor = convert(formatage.format(dateDebut));
+		Date dateFinFor = convert(formatage.format(dateFin));
+
+		Date now = DateUtils.getNow();
+		if (dateDebutFor.before(now) && dateFinFor.after(now)) {
+			return true;
+		}
+		return false;
+	}
+	
 	///////////////////////////////////////////////
 	///           POUR LA FACTURATION           ///
 	///////////////////////////////////////////////

@@ -51,7 +51,6 @@ public class Paiement {
 			this.typeReglement = typeReglement;
 			this.facture = facture;
 			this.agence = agence;
-			facture.setTypeReglement(typeReglement);
 			agence.setBilan(facture.getCoutFacture());
 			facture.setStatusFacture(StatusFacture.PAYE);
 		}

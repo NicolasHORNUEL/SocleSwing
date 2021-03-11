@@ -6,8 +6,7 @@ public enum TypeReglement  implements Selectable {
 
 	CB(1L),
 	LIQUIDE(2L),
-	CHEQUE(3L),
-	A_DEFINIR(4L);
+	CHEQUE(3L);
 	
 	private Long id;
 	

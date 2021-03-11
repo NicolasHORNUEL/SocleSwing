@@ -8,9 +8,11 @@ import fr.diginamic.composants.ui.DateField;
 import fr.diginamic.composants.ui.Form;
 import fr.diginamic.composants.ui.TextField;
 import fr.diginamic.nicolas.dao.ClientDao;
+import fr.diginamic.nicolas.dao.ReservationDao;
 import fr.diginamic.nicolas.entite.Adresse;
 import fr.diginamic.nicolas.entite.Client;
 import fr.diginamic.nicolas.entite.Permis;
+import fr.diginamic.nicolas.entite.Reservation;
 import fr.diginamic.nicolas.utils.DateUtils;
 
 public class ClientService extends MenuService {
@@ -90,12 +92,12 @@ public class ClientService extends MenuService {
 	
 	public void supprimer(Long id) {
 		Client c = ClientDao.findById(id);
-		if (c.getReservation().isEmpty()){
+		List<Reservation> reservationsDao = ReservationDao.findAllByClient(id);
+		if (reservationsDao.isEmpty()) {
 			ClientDao.delete(c);
 		} else {
 			console.alert("Interdit");
 		}
-
 		traitement();
 	}
 

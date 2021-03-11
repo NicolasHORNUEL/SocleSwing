@@ -13,6 +13,19 @@ public class ReservationDao extends AbstractDao {
 		TypedQuery<Reservation> query = em.createQuery("SELECT r FROM Reservation r", Reservation.class);
 		return query.getResultList();
 	}
+	
+	public static List<Reservation> findAllByVehicule(Long id) {
+		TypedQuery<Reservation> query = em.createQuery("SELECT r FROM Reservation r WHERE r.vehicule.id=?1", Reservation.class);
+		query.setParameter(1, id);
+		return query.getResultList();
+	}
+	
+	public static List<Reservation> findAllByClient(Long id) {
+		TypedQuery<Reservation> query = em.createQuery("SELECT r FROM Reservation r WHERE r.client.id=?1", Reservation.class);
+		query.setParameter(1, id);
+		return query.getResultList();
+	}
+	
 
 	public static Reservation findById(Long id) {
 		return em.find(Reservation.class, id);

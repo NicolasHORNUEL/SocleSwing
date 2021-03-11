@@ -16,6 +16,7 @@ import fr.diginamic.nicolas.entite.Camion;
 import fr.diginamic.nicolas.entite.Type;
 import fr.diginamic.nicolas.entite.Vehicule;
 import fr.diginamic.nicolas.entite.Voiture;
+import fr.diginamic.nicolas.enumeration.StatusVehicule;
 import fr.diginamic.nicolas.enumeration.TypeVehicule;
 
 public class VehiculeService extends MenuService {
@@ -171,7 +172,7 @@ public class VehiculeService extends MenuService {
 	
 	public void supprimer(Long id) {
 		Vehicule v = VehiculeDao.findById(id);
-		if (v.getReservation().isEmpty()) {
+		if (v.getStatusVehicule().equals(StatusVehicule.DISPONIBLE)) {
 			VehiculeDao.delete(v);
 		} else {
 			console.alert("Le véhicule ne peut pas être supprimé");

@@ -1,6 +1,7 @@
 package fr.diginamic.nicolas.entite;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import fr.diginamic.composants.ui.Selectable;
+import fr.diginamic.nicolas.dao.MaintenanceDao;
+import fr.diginamic.nicolas.dao.ReservationDao;
 import fr.diginamic.nicolas.enumeration.StatusReservation;
 import fr.diginamic.nicolas.enumeration.StatusVehicule;
 import fr.diginamic.nicolas.utils.DateUtils;
@@ -63,7 +66,18 @@ public class Vehicule implements Selectable {
 	public Vehicule() {
 		
 	}
-
+	/** Constructeur
+	 * 
+	 */
+	public Vehicule(Long id, String marque, String modele, String immatriculation, int kilometrage, Type type) {
+		this.id = id;
+		this.marque = marque;
+		this.modele = modele;
+		this.immatriculation = immatriculation;
+		this.kilometrage = kilometrage;
+		this.type = type;
+	}
+	
 	/** Constructeur
 	 * 
 	 */
@@ -71,7 +85,6 @@ public class Vehicule implements Selectable {
 		this.marque = marque;
 		this.modele = modele;
 		this.immatriculation = immatriculation;
-		this.statusVehicule = StatusVehicule.DISPONIBLE;
 		this.kilometrage = kilometrage;
 		this.type = type;
 	}
@@ -89,6 +102,43 @@ public class Vehicule implements Selectable {
 		return builder.toString();
 	}
 
+	/** Getter
+	 * @return the statusVehicule
+	 */
+	public StatusVehicule getStatusVehicule() {
+		
+		this.setStatusVehicule(StatusVehicule.DISPONIBLE);
+
+		List<Reservation> reservationsDao = ReservationDao.findAllByVehicule(this.id);
+		if (!reservationsDao.isEmpty()) {
+			for (Reservation r : reservationsDao) {
+				StatusReservation rStatus = r.getStatusReservation();	
+				boolean isNow = DateUtils.plageIsNow(r.getDateDebut(), r.getDateFin());
+				if (isNow && rStatus.equals(StatusReservation.ENCOURS)) {
+					this.setStatusVehicule(StatusVehicule.LOUE);
+				}
+			}
+		}
+		
+		List<Maintenance> maintenancesDao = MaintenanceDao.findAllByVehicule(this.id);
+		if (!maintenancesDao.isEmpty()) {
+			for (Maintenance m : maintenancesDao) {
+				if (m.getDateFin()==null) {
+					this.setStatusVehicule(StatusVehicule.EN_MAINTENANCE);
+				}
+			}
+		}
+
+		return statusVehicule;
+	}
+
+	/** Setter
+	 * @param statusVehicule the statusVehicule to set
+	 */
+	public void setStatusVehicule(StatusVehicule statusVehicule) {
+		this.statusVehicule = statusVehicule;
+	}
+	
 	/** Getter
 	 * @return the id
 	 */
@@ -143,36 +193,6 @@ public class Vehicule implements Selectable {
 	 */
 	public void setImmatriculation(String immatriculation) {
 		this.immatriculation = immatriculation;
-	}
-
-	/** Getter
-	 * @return the statusVehicule
-	 */
-	public StatusVehicule getStatusVehicule() {
-		this.statusVehicule = StatusVehicule.DISPONIBLE;
-		if (!reservations.isEmpty()) {
-			for (Reservation r : reservations) {
-				StatusReservation rStatus = r.getStatusReservation();
-				if (r.getDateDebut().before(DateUtils.getNow()) && r.getDateFin().after(DateUtils.getNow()) && rStatus.equals(StatusReservation.ENCOURS)) {
-					this.setStatusVehicule(StatusVehicule.LOUE);
-				}
-			}
-		}
-		if (!maintenances.isEmpty()) {
-			for (Maintenance m : maintenances) {
-				if (m.getDateFin()==null) {
-					this.setStatusVehicule(StatusVehicule.EN_MAINTENANCE);
-				}
-			}
-		}
-		return statusVehicule;
-	}
-
-	/** Setter
-	 * @param statusVehicule the statusVehicule to set
-	 */
-	public void setStatusVehicule(StatusVehicule statusVehicule) {
-		this.statusVehicule = statusVehicule;
 	}
 
 	/** Getter
